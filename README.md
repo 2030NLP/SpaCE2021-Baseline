@@ -36,14 +36,14 @@ bert4task1
 
 ### 模型
 
-task1和task2的模型均采用了bert+fintuning
+task1和task2的模型均采用了bert完成文本编码
 
-* 具体实现：使用了[huggingface](https://huggingface.co/)开发的transformers工具包中的[BertForSequenceClassification](https://huggingface.co/transformers/model_doc/bert.html#bertforsequenceclassification)直接作为训练使用的模型（该模型相当于是在基本的bert编码结构后接上了分类器用以token序列分类）
-* 预训练数据则使用了`BERT-wwm-ext`（可以点[此处](https://github.com/ymcui/Chinese-BERT-wwm)了解更多或下载，解压完成后放入`pretrained_bert_models`文件夹下，并将`bert_config.json`重命名为`config.json`即可）
+* 使用了transformers工具包中[BertForSequenceClassification](https://huggingface.co/transformers/model_doc/bert.html#bertforsequenceclassification)直接作为训练使用的模型（该模型相当于是在基本的bert结构后接上了分类器用以token序列分类）
+* bert的预训练数据则使用了`BERT-wwm-ext`（可以点[此处](https://github.com/ymcui/Chinese-BERT-wwm)了解更多并下载，解压完成后放入`pretrained_bert_models`文件夹下，并将`bert_config.json`重命名为`config.json`即可）
 
 ### 数据预处理
 
-这里为了处理方便，直接使用了transformers包中的BertTokenizer工具，实例化tokenizer后，可以直接向其传入待处理的原始文本获得分词完并转化后词在词表中的索引。比如：
+这里为了处理方便，使用了transformers包中的BertTokenizer类，实例化tokenizer后，可以调用`encode()`方法并向其传入待处理的原始文本进行分词并获得token在词表中的索引。比如：
 
 ```python
 from transformers import BertTokenizer
@@ -58,9 +58,9 @@ print(result)
 [101, 1762, 1814, 100, 5307, 6814, 100, 7347, 1377, 2586, 4638, 2881, 2915, 1400, 8024, 2769, 5303, 754, 1168, 749, 6946, 1912, 511, 102]
 ```
 
-上面的列表是处理后的token索引，首尾的`101`和`102`分别是增加的两个特殊token`[CLS]`和`[SEP]`的索引。上述过程处理之后再经过padding和转成torch张量之后就可以输入到模型了。
+上面的列表是处理后的token索引，首尾的`101`和`102`分别是增加的两个特殊token`[CLS]`和`[SEP]`的索引。上述过程处理之后再经过padding并转成torch张量之后就可直接作为模型的输入。
 
-由于task1中所有句子的长度有限（不超过510），所以不用进行截断处理；而task2中由于需要将句子和reason进行拼接，存在token长度超过509的情况，这里采用了先保证reason原长度不截断，如需截断则截断前面的句子的策略，所以任务二处理后的token序列可形式化的表示为`[CLS]`+context+`[SEP]`+reason+`[SEP]`。
+由于task1中所有句子的长度有限（不超过510），所以不用进行截断处理；而task2中因需要将context和reason进行拼接（`[CLS]`+context+`[SEP]`+reason+`[SEP]`），存在token长度超过509的情况，这里采用了保证reason不截断，如需截断则截断context的策略。
 
 ### 训练
 
