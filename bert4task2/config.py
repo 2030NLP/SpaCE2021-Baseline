@@ -7,16 +7,12 @@ dev_dir = data_dir + '/test.json'
 test_dir = data_dir + '/dev.json'
 files = ['train', 'dev', 'test']
 bert_model = 'pretrained_bert_models/chinese-wwm-ext/'
-roberta_model = 'pretrained_bert_models/chinese_roberta_wwm_large_ext/'
-model_dir = os.getcwd() + '/experiments/clue/'
+model_dir = os.getcwd() + '/experiments/'
 log_dir = model_dir + 'train.log'
-case_dir = os.getcwd() + '/case/bad_case.txt'
 result_dir = data_dir + '/prediction.json'
 
-# 训练集、验证集划分比例
-# dev_split_size = 0.1
 
-# 是否加载训练好的NER模型
+# 是否加载训练好的模型
 load_before = False
 
 # 是否对整个BERT进行fine tuning

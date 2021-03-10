@@ -7,8 +7,7 @@ dev_dir = data_dir + '/dev.json'
 test_dir = data_dir + '/united_test.json'
 files = ['train', 'dev', 'test']
 bert_model = 'pretrained_bert_models/chinese-wwm-ext/'
-roberta_model = 'pretrained_bert_models/chinese_roberta_wwm_large_ext/'
-model_dir = os.getcwd() + '/experiments/clue/'
+model_dir = os.getcwd() + '/experiments/'
 log_dir = model_dir + 'train.log'
 result_dir = data_dir + '/united_test.json'
 
