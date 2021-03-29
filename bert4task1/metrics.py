@@ -1,7 +1,6 @@
-import config
 import json
 
-def get_metrics(true_tags, pred_tags, mode='dev'):
+def get_metrics(true_tags, pred_tags, mode='dev', test_dir=None, result_dir=None):
 
     result = {}
     tp = fp = fn = tn = 0
@@ -32,18 +31,13 @@ def get_metrics(true_tags, pred_tags, mode='dev'):
     result['f1'] = f1
     # print(metrics)
     if mode == 'test':
-        with open(config.test_dir, 'r') as fr:
+        with open(test_dir, 'r') as fr:
             items = json.load(fr)
 
         for idx, item in enumerate(items):
             item['pred1'] = int(pred_tags[idx])
 
-        with open(config.result_dir, 'w') as fw:
+        with open(result_dir, 'w') as fw:
             json.dump(items, fw, indent=2, ensure_ascii=False)
 
     return result
-
-if __name__ == "__main__":
-    true = [0,1,0]
-    pred = [1,1,0]
-    print(acc(true, pred))

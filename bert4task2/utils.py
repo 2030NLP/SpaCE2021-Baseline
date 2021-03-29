@@ -1,5 +1,19 @@
 import logging
+import config
+import json
+from sklearn.model_selection import train_test_split
 
+
+def split_training_set():
+    with open(config.ori_train_dir,'r') as fr:
+        origin_train = json.load(fr)
+
+    splited_train, splited_dev = train_test_split(origin_train, train_size=0.9)
+
+    with open(config.train_dir, 'w') as fw:
+        json.dump(splited_train, fw, indent=2, ensure_ascii=False)
+    with open(config.dev_dir, 'w') as fw:
+        json.dump(splited_dev, fw, indent=2, ensure_ascii=False)
 
 def set_logger(log_path):
     """Set the logger to log info in terminal and file `log_path`.

@@ -5,8 +5,6 @@ import torch.nn as nn
 import numpy as np
 from tqdm import tqdm
 from metrics import get_metrics
-from transformers import BertTokenizer
-from transformers import BertForSequenceClassification
 
 
 def train_epoch(train_loader, model, optimizer, scheduler, epoch):
@@ -14,14 +12,12 @@ def train_epoch(train_loader, model, optimizer, scheduler, epoch):
     model.train()
     train_losses = 0
     for idx, batch_sample in enumerate(tqdm(train_loader)):
-        batch_data, batch_label, batch_segment = batch_sample
+        batch_data, batch_label = batch_sample
         batch_mask = batch_data.gt(0)  # get padding mask
-        # batch_segment = batch_data.lt(-1)   # get segment flag
 
         # compute model output and loss
         outputs = model(input_ids = batch_data,
                         attention_mask = batch_mask,
-                        #token_type_ids = batch_segment,
                         labels=batch_label)
         loss = outputs.loss
         train_losses += loss
@@ -39,11 +35,6 @@ def train_epoch(train_loader, model, optimizer, scheduler, epoch):
 
 def train(train_loader, dev_loader, model, optimizer, scheduler, model_dir):
     """train the model and test model performance"""
-    # reload weights from restore_dir if specified
-    if model_dir is not None and config.load_before:
-        model = BertForSequenceClassification.from_pretrained(model_dir)
-        model.to(config.device)
-        logging.info("--------Load model from {}--------".format(model_dir))
     best_val_acc = 0.0
     patience_counter = 0
     # start training
@@ -71,7 +62,7 @@ def train(train_loader, dev_loader, model, optimizer, scheduler, model_dir):
     logging.info("Training Finished!")
 
 
-def evaluate(dev_loader, model, mode='dev'):
+def evaluate(dev_loader, model, mode='dev', test_dir=None, result_dir=None):
     # set model to evaluation mode
     model.eval()
     true_tags = []
@@ -80,7 +71,7 @@ def evaluate(dev_loader, model, mode='dev'):
 
     with torch.no_grad():
         for idx, batch_samples in enumerate(dev_loader):
-            batch_data, batch_label, batch_segment = batch_samples
+            batch_data, batch_label= batch_samples
             batch_mask = batch_data.gt(0)
             # batch_segment = batch_data.lt(-1)
 
@@ -98,6 +89,6 @@ def evaluate(dev_loader, model, mode='dev'):
             true_tags.extend(batch_tags)
 
     assert len(pred_tags) == len(true_tags)
-    metrics = get_metrics(true_tags, pred_tags, mode)
+    metrics = get_metrics(true_tags, pred_tags, mode, test_dir, result_dir)
     metrics['loss'] = float(dev_losses) / len(dev_loader)
     return metrics
