@@ -1,12 +1,13 @@
 import os
+import sys
 import torch
 
 data_dir = os.getcwd() + '/data'
 ori_train_dir = data_dir + '/task1-train-with-answer.json'
 train_dir = data_dir + '/task1-splited-train.json'
 dev_dir = data_dir + '/task1-splited-dev.json'
-test_dir = data_dir + '/task1-dev.json'
-bert_model = 'pretrained_bert_models/chinese-wwm-ext/'
+test_dir = data_dir + '/task1-test-with-answer.json'
+bert_model = '/data1/qinziwei/NLU/Bert_Biclassification/bert4task1/pretrained_bert_models/chinese-wwm-ext/'
 model_dir = os.getcwd() + '/experiments/'
 log_dir = model_dir + 'train.log'
 result_dir = data_dir + '/prediction.json'

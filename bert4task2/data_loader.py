@@ -1,6 +1,5 @@
 import torch
 import json
-import config
 import numpy as np
 from transformers import BertTokenizer
 from torch.utils.data import Dataset

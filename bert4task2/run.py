@@ -1,3 +1,5 @@
+# from . import utils
+# from . import config
 import utils
 import config
 import logging
@@ -91,5 +93,5 @@ def run():
     test(config.model_dir, config.test_dir, config.result_dir)
 
 if __name__ == '__main__':
-    run()
-
+    # run()
+    test(config.model_dir, config.test_dir, config.result_dir)

@@ -140,3 +140,4 @@ cython_debug/
 # Pycharm
 /bert4task1/.idea
 /bert4task2/.idea
+/.idea

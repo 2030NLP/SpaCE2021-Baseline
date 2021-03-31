@@ -59,9 +59,9 @@ def get_new_metrics(result_dir):
 if __name__ == "__main__":
     model1_dir = os.getcwd() + '/bert4task1/experiments'
     model2_dir = os.getcwd() + '/bert4task2/experiments'
-    task3_test_dir = os.getcwd() + '/task3-dev.json'
+    task3_test_dir = os.getcwd() + '/task3-dev-with-answer.json'
     model1_prediction_dir = os.getcwd() + '/model1_prediction.json'
     model2_prediction_dir = os.getcwd() + '/model2_prediction.json'
     test1(model1_dir, task3_test_dir, model1_prediction_dir)
     test2(model2_dir, model1_prediction_dir, model2_prediction_dir)
-    # get_new_metrics(model2_prediction_dir)
+    get_new_metrics(model2_prediction_dir)
