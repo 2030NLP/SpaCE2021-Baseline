@@ -1,11 +1,13 @@
 # from . import utils
 # from . import config
-import utils
-import config
+
+
 import torch
 import logging
 import json
 import numpy as np
+import config
+from utils import split_training_set, set_logger
 from data_loader import SpaCEDataset
 from train import train, evaluate
 
@@ -69,8 +71,8 @@ def test(model_dir, test_dir, result_dir):
 def run():
     """train the model"""
     # set the logger
-    utils.split_training_set()
-    utils.set_logger(config.log_dir)
+    split_training_set()
+    set_logger(config.log_dir)
     logging.info("device: {}".format(config.device))
     train_dataset = SpaCEDataset(config.train_dir, config)
     dev_dataset = SpaCEDataset(config.dev_dir, config)

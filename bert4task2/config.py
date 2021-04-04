@@ -1,15 +1,15 @@
 import os
 import torch
 
-data_dir = os.getcwd() + '/data'
+data_dir = '../data'
 ori_train_dir = data_dir + '/task2-train-with-answer.json'
 train_dir = data_dir + '/task2-splited-train.json'
 dev_dir = data_dir + '/task2-splited-dev.json'
-test_dir = data_dir + '/task2-test-with-answer.json'
-bert_model = '/data1/qinziwei/NLU/Bert_Biclassification/bert4task2/pretrained_bert_models/chinese-wwm-ext/'
-model_dir = os.getcwd() + '/experiments/'
+test_dir = data_dir + '/task2-dev.json'
+bert_model = '../pretrained_bert_models/chinese-wwm-ext/'
+model_dir = './experiments/'
 log_dir = model_dir + 'train.log'
-result_dir = data_dir + '/prediction.json'
+result_dir = data_dir + '/task2-dev-result.json'
 
 # hyper-parameter
 learning_rate = 1e-5

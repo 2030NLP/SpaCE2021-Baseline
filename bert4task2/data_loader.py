@@ -23,7 +23,7 @@ class SpaCEDataset(Dataset):
             text = item['context']
             answer = item['reason']
 
-            text_tokens = self.tokenizer.encode(text)[1:-1]     # 恰头去尾好处理
+            text_tokens = self.tokenizer.encode(text)[1:-1]
             ans_tokens = self.tokenizer.encode(answer)[1:-1]
 
             # 优先保证answer完整
