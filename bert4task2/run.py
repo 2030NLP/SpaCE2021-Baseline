@@ -90,8 +90,7 @@ def run():
     # Train the model
     logging.info("--------Start Training!--------")
     train(train_loader, dev_loader, model, optimizer, scheduler, config.model_dir)
-    test(config.model_dir, config.test_dir, config.result_dir)
 
 if __name__ == '__main__':
-    # run()
+    run()
     test(config.model_dir, config.test_dir, config.result_dir)
