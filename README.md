@@ -58,7 +58,7 @@ task1和task2的模型均采用了bert完成文本编码
 
 首先需要将三个任务用到的数据集置于`data`文件夹下。
 
-task1中所有句子的长度有限（不超过510），不用进行截断处理；而task2中因需要将context和reason拼接后（`[CLS]`+context+`[SEP]`+reason+`[SEP]`）输入到Bert中，存在token长度超过509的情况，这里采用了保证reason不截断，如需截断则截断context的策略。
+task1中所有句子的长度有限（不超过510），不用进行截断处理；而task2中因需要将context和reason拼接后（`[CLS]`+context+`[SEP]`+reason+`[SEP]`）输入到Bert中，**可能**存在token长度超过509的情况，这里采用了保证reason不截断，如需截断则截断context的策略。
 
 ### 训练
 
